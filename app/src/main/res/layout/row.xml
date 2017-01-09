@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circular="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <shayan.progressview.CircularProgress
+        android:id="@+id/row_circularProgress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        circular:Circular_finished_stroke_width="3dp"
+        circular:Circular_progress_num="3"
+        circular:Circular_unfinished_stroke_width="3dp" />
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Circular">
+        <attr name="Circular_progress" format="float" />
+        <attr name="Circular_max" format="integer" />
+
+        <attr name="Circular_unfinished_color" format="color" />
+        <attr name="Circular_finished_color" format="color" />
+
+        <attr name="Circular_finished_stroke_width" format="dimension" />
+        <attr name="Circular_unfinished_stroke_width" format="dimension" />
+        <attr name="Circular_indeterminate_size" format="dimension" />
+        <attr name="Circular_indeterminate" format="boolean" />
+
+        <attr name="Circular_background_color" format="color" />
+
+        <attr name="Circular_starting_degree" format="integer" />
+        <attr name="Circular_animation_duration" format="integer" />
+        <attr name="Circular_progress_num" format="integer" />
+        <attr name="Circular_inner_drawable" format="reference" />
+    </declare-styleable>
+
+
+</resources>
