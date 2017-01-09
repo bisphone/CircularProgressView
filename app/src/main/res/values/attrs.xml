@@ -17,7 +17,6 @@
         <attr name="Circular_starting_degree" format="integer" />
         <attr name="Circular_animation_duration" format="integer" />
         <attr name="Circular_progress_num" format="integer" />
-        <attr name="Circular_inner_drawable" format="reference" />
     </declare-styleable>
 
 
