@@ -272,6 +272,8 @@ public class CircularProgress extends View {
         firstPartFinishedPaint = new Paint();
         firstPartFinishedPaint.setColor(finishedStrokeColor);
         firstPartFinishedPaint.setStyle(Paint.Style.STROKE);
+        firstPartFinishedPaint.setStrokeCap(Paint.Cap.ROUND);
+        firstPartFinishedPaint.setStrokeJoin(Paint.Join.ROUND);
         firstPartFinishedPaint.setAntiAlias(true);
         firstPartFinishedPaint.setStrokeWidth(finishedStrokeWidth);
 
