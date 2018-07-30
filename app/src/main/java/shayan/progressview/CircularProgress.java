@@ -357,21 +357,24 @@ public class CircularProgress extends View {
 
         if (anim == null) {
             anim = ValueAnimator.ofFloat(this.progress, progress);
+
+            anim.removeAllUpdateListeners();
+            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    CircularProgress.this.progress = (float) valueAnimator.getAnimatedValue();
+                    if (CircularProgress.this.progress > getMax()) {
+                        CircularProgress.this.progress %= getMax();
+                    }
+
+                    postInvalidate();
+                }
+            });
         } else {
             anim.cancel();
             anim.setFloatValues(this.progress, progress);
         }
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                CircularProgress.this.progress = (float) valueAnimator.getAnimatedValue();
-                if (CircularProgress.this.progress > getMax()) {
-                    CircularProgress.this.progress %= getMax();
-                }
 
-                postInvalidate();
-            }
-        });
         anim.start();
     }
 
