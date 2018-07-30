@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        circularProgress.setProgress(circularProgress.getProgress() + 1);
+                        circularProgress.setProgress(circularProgress.getProgress() + 20);
                         handler.postDelayed(this, 500);
                     }
                 }, 500);

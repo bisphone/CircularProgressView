@@ -1,5 +1,6 @@
 package shayan.progressview;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -340,6 +341,8 @@ public class CircularProgress extends View {
         return progress;
     }
 
+    ValueAnimator anim;
+
     public void setProgress(float progress) {
 
         // invalidate view is redundant
@@ -351,13 +354,25 @@ public class CircularProgress extends View {
             return;
         }
 
-        this.progress = progress;
-        if (this.progress > getMax()) {
-            this.progress %= getMax();
+
+        if (anim == null) {
+            anim = ValueAnimator.ofFloat(this.progress, progress);
+        } else {
+            anim.cancel();
+            anim.setFloatValues(this.progress, progress);
         }
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                CircularProgress.this.progress = (float) valueAnimator.getAnimatedValue();
+                if (CircularProgress.this.progress > getMax()) {
+                    CircularProgress.this.progress %= getMax();
+                }
 
-        postInvalidate();
-
+                postInvalidate();
+            }
+        });
+        anim.start();
     }
 
     public int getMax() {
