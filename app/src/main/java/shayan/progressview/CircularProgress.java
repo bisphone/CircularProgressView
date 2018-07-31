@@ -1,5 +1,6 @@
 package shayan.progressview;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -42,7 +43,8 @@ public class CircularProgress extends View {
     private int innerBackgroundColor;
     private int animationDuration;
 
-    private RotateAnimation rotate;
+    private RotateAnimation rotateAnim;
+    private ValueAnimator progressAnim;
     private boolean mAggregatedIsVisible;
 
 
@@ -169,7 +171,7 @@ public class CircularProgress extends View {
             }
         }
 
-        if (rotate == null) {
+        if (rotateAnim == null) {
             createRotateAnimation(canvas);
         }
     }
@@ -351,13 +353,28 @@ public class CircularProgress extends View {
             return;
         }
 
-        this.progress = progress;
-        if (this.progress > getMax()) {
-            this.progress %= getMax();
+
+        if (progressAnim == null) {
+            progressAnim = ValueAnimator.ofFloat(this.progress, progress);
+
+            progressAnim.removeAllUpdateListeners();
+            progressAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    CircularProgress.this.progress = (float) valueAnimator.getAnimatedValue();
+                    if (CircularProgress.this.progress > getMax()) {
+                        CircularProgress.this.progress %= getMax();
+                    }
+
+                    postInvalidate();
+                }
+            });
+        } else {
+            progressAnim.cancel();
+            progressAnim.setFloatValues(this.progress, progress);
         }
 
-        postInvalidate();
-
+        progressAnim.start();
     }
 
     public int getMax() {
@@ -463,7 +480,7 @@ public class CircularProgress extends View {
 
     private void stopAnimation() {
         clearAnimation();
-        rotate = null;
+        rotateAnim = null;
     }
 
 
@@ -525,12 +542,12 @@ public class CircularProgress extends View {
 
         stopAnimation();
 
-        rotate = new RotateAnimation(0, 360, width, height);
-        rotate.setRepeatMode(Animation.RESTART);
-        rotate.setRepeatCount(Animation.INFINITE);
-        rotate.setInterpolator(new LinearInterpolator());
-        rotate.setDuration(animationDuration);
-        startAnimation(rotate);
+        rotateAnim = new RotateAnimation(0, 360, width, height);
+        rotateAnim.setRepeatMode(Animation.RESTART);
+        rotateAnim.setRepeatCount(Animation.INFINITE);
+        rotateAnim.setInterpolator(new LinearInterpolator());
+        rotateAnim.setDuration(animationDuration);
+        startAnimation(rotateAnim);
 
     }
 
